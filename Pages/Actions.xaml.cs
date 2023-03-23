@@ -33,7 +33,7 @@ namespace GiveGood.Pages
             InitializeComponent();
             beforeCount = Helper.DB.Action.ToList().Count;
             List<string> values = new List<string>();
-            if(Classes.User.roleID==1)
+            if(Classes.User.roleID==2)
             {
                 AddAction.IsEnabled = false;
                 AddAction.Visibility = Visibility.Hidden;
