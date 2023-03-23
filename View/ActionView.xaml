@@ -1,0 +1,152 @@
+﻿<Window x:Class="GiveGood.View.ActionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GiveGood.View"
+        mc:Ignorable="d"
+        Title="ActionView" Height="550" Width="1050" MinHeight="550" MinWidth="1050">
+    <Grid Name="MainContainer">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid Name="MainHeader" Grid.Row="0" Background="LightBlue" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="Logo" Grid.Column="0">
+            </Image>
+            <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center">
+                <TextBlock x:Name="Fio" VerticalAlignment="Center" HorizontalAlignment="Center">ФИО</TextBlock>
+                <Button Background="#FFFFFF" x:Name="buttonAction" Grid.Column="2" Grid.Row="1" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonAction_Click" FontSize="14" >Назад</Button>
+            </StackPanel>
+
+            <TextBlock x:Name="HeaderText" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">Просмотр акции</TextBlock>
+        </Grid>
+        <Grid Name="MainContent" Grid.Row="1" Background="AliceBlue" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Border Background="#FFFFFF" BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,5,10,5">
+                <Grid x:Name="IDName" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14">Идентификатор</TextBlock>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14">Наименование</TextBlock>
+                    <TextBox x:Name="ActionID" Margin="10,0,10,0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="14" Text="sdfsdfsdf" IsReadOnly="True"/>
+                    <TextBox x:Name="ActionName" Margin="10,0,10,0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="14" Text="sdfsdfsdf" IsReadOnly="True"></TextBox>
+                </Grid>
+            </Border>
+            <Border Background="#FFFFFF" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,5,10,5">
+                <Grid x:Name="Description" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Описание</TextBlock>
+                    <TextBox x:Name="ActionDescription" Margin="10,5,10,5" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Text="sdfsdfsdf" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" IsReadOnly="True"/>
+                </Grid>
+            </Border>
+            <Border Background="#FFFFFF" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,5,10,5">
+                <Grid x:Name="Data" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Район</TextBlock>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Тип</TextBlock>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Статус</TextBlock>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" TextWrapping="Wrap">Максимальное количество участников</TextBlock>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionDistrict" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="top" FontSize="14" Text="sdfsdfsdf" IsReadOnly="True"/>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionType" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" FontSize="14" IsReadOnly="True"/>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionStatus" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" FontSize="14" IsReadOnly="True"/>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionMaxPart" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" FontSize="14" IsReadOnly="True"/>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Дата регистрации</TextBlock>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Дата начала</TextBlock>
+                    <TextBlock x:Name="IsEndDate" Margin="10,5,10,5" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="14">Дата окончания</TextBlock>
+                    <TextBlock Margin="10,5,10,5" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Stretch" TextWrapping="Wrap">Количество участников</TextBlock>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionRegDate" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="14" IsReadOnly="True"></TextBox>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionStartDate" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="14" IsReadOnly="True"></TextBox>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionEndDate" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="14" IsReadOnly="True"/>
+                    <TextBox Margin="10,5,10,5" x:Name="ActionPart" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" FontSize="14" IsReadOnly="True"/>
+                    <Button Margin="10,5,10,5" x:Name="Join" Grid.Column="2" Grid.Row="4" FontSize="14" VerticalAlignment="Stretch" Click="Join_Click"/>
+                </Grid>
+            </Border>
+            <Border x:Name="ListBorder" Background="#FFFFFF" BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="4" Grid.RowSpan="3" Margin="10,5,10,5">
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <ListBox x:Name="ActionList" HorizontalAlignment="Stretch">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+
+                                <Grid x:Name="dataList" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.RowSpan="3">
+                                        <Grid Margin="10,5,10,5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock x:Name="SunnameText" Margin="10,5,10,5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Path = UserSurname}"/>
+                                            <TextBlock x:Name="NameText" Margin="10,5,10,5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Path = UserName}"/>
+                                            <TextBlock x:Name="PatronymicText" Margin="10,5,10,5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Path = UserPatronymic}"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Name="MainFooter" Grid.Row="2" Background="LightBlue" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </Grid>
+</Window>
