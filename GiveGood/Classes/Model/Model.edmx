@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище GiveGoodModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="ActionID" />
+          </Key>
+          <Property Name="ActionID" Type="int" Nullable="false" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ActionTypeID" Type="int" Nullable="false" />
+          <Property Name="ActionDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ActionMaxParticipants" Type="int" Nullable="false" />
+          <Property Name="ActionStatusID" Type="int" Nullable="false" />
+          <Property Name="ActionRegisterDate" Type="date" Nullable="false" />
+          <Property Name="ActionStartDate" Type="date" Nullable="false" />
+          <Property Name="ActionFinishDate" Type="date" />
+        </EntityType>
+        <EntityType Name="ActionDistrict">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+            <PropertyRef Name="ActionID" />
+          </Key>
+          <Property Name="DistrictID" Type="int" Nullable="false" />
+          <Property Name="ActionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionOrganizer">
+          <Key>
+            <PropertyRef Name="ActionID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ActionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionParticipant">
+          <Key>
+            <PropertyRef Name="ActionID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ActionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionStatus">
+          <Key>
+            <PropertyRef Name="ActionStatusID" />
+          </Key>
+          <Property Name="ActionStatusID" Type="int" Nullable="false" />
+          <Property Name="ActionStatusName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionType">
+          <Key>
+            <PropertyRef Name="ActionTypeID" />
+          </Key>
+          <Property Name="ActionTypeID" Type="int" Nullable="false" />
+          <Property Name="ActionTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="int" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPatronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar(max)" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar(max)" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDistrict">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="DistrictID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Action_ActionStatus">
+          <End Role="ActionStatus" Type="Self.ActionStatus" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionStatus">
+              <PropertyRef Name="ActionStatusID" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="ActionStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Action_ActionType">
+          <End Role="ActionType" Type="Self.ActionType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionType">
+              <PropertyRef Name="ActionTypeID" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="ActionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionDistrict_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActionDistrict" Type="Self.ActionDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="ActionID" />
+            </Principal>
+            <Dependent Role="ActionDistrict">
+              <PropertyRef Name="ActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionDistrict_District">
+          <End Role="District" Type="Self.District" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActionDistrict" Type="Self.ActionDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="ActionDistrict">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionOrganizer_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActionOrganizer" Type="Self.ActionOrganizer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="ActionID" />
+            </Principal>
+            <Dependent Role="ActionOrganizer">
+              <PropertyRef Name="ActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionOrganizer_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActionOrganizer" Type="Self.ActionOrganizer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ActionOrganizer">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionParticipant_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActionParticipant" Type="Self.ActionParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="ActionID" />
+            </Principal>
+            <Dependent Role="ActionParticipant">
+              <PropertyRef Name="ActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionParticipant_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ActionParticipant" Type="Self.ActionParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ActionParticipant">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDistrict_District">
+          <End Role="District" Type="Self.District" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserDistrict" Type="Self.UserDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="UserDistrict">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDistrict_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserDistrict" Type="Self.UserDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserDistrict">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище GiveGoodModelContainer">
+          <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionDistrict" EntityType="Self.ActionDistrict" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionOrganizer" EntityType="Self.ActionOrganizer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionParticipant" EntityType="Self.ActionParticipant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionStatus" EntityType="Self.ActionStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionType" EntityType="Self.ActionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDistrict" EntityType="Self.UserDistrict" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Action_ActionStatus" Association="Self.FK_Action_ActionStatus">
+            <End Role="ActionStatus" EntitySet="ActionStatus" />
+            <End Role="Action" EntitySet="Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Action_ActionType" Association="Self.FK_Action_ActionType">
+            <End Role="ActionType" EntitySet="ActionType" />
+            <End Role="Action" EntitySet="Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionDistrict_Action" Association="Self.FK_ActionDistrict_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="ActionDistrict" EntitySet="ActionDistrict" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionDistrict_District" Association="Self.FK_ActionDistrict_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="ActionDistrict" EntitySet="ActionDistrict" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionOrganizer_Action" Association="Self.FK_ActionOrganizer_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="ActionOrganizer" EntitySet="ActionOrganizer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionOrganizer_User" Association="Self.FK_ActionOrganizer_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ActionOrganizer" EntitySet="ActionOrganizer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionParticipant_Action" Association="Self.FK_ActionParticipant_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="ActionParticipant" EntitySet="ActionParticipant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionParticipant_User" Association="Self.FK_ActionParticipant_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ActionParticipant" EntitySet="ActionParticipant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDistrict_District" Association="Self.FK_UserDistrict_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="UserDistrict" EntitySet="UserDistrict" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDistrict_User" Association="Self.FK_UserDistrict_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserDistrict" EntitySet="UserDistrict" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GiveGoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="ActionID" />
+          </Key>
+          <Property Name="ActionID" Type="Int32" Nullable="false" />
+          <Property Name="ActionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ActionTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ActionDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ActionMaxParticipants" Type="Int32" Nullable="false" />
+          <Property Name="ActionStatusID" Type="Int32" Nullable="false" />
+          <Property Name="ActionRegisterDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ActionStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ActionFinishDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ActionStatus" Relationship="Self.FK_Action_ActionStatus" FromRole="Action" ToRole="ActionStatus" />
+          <NavigationProperty Name="ActionType" Relationship="Self.FK_Action_ActionType" FromRole="Action" ToRole="ActionType" />
+          <NavigationProperty Name="District" Relationship="Self.ActionDistrict" FromRole="Action" ToRole="District" />
+          <NavigationProperty Name="User" Relationship="Self.ActionOrganizer" FromRole="Action" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.ActionParticipant" FromRole="Action" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ActionStatus">
+          <Key>
+            <PropertyRef Name="ActionStatusID" />
+          </Key>
+          <Property Name="ActionStatusID" Type="Int32" Nullable="false" />
+          <Property Name="ActionStatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Action" Relationship="Self.FK_Action_ActionStatus" FromRole="ActionStatus" ToRole="Action" />
+        </EntityType>
+        <EntityType Name="ActionType">
+          <Key>
+            <PropertyRef Name="ActionTypeID" />
+          </Key>
+          <Property Name="ActionTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ActionTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Action" Relationship="Self.FK_Action_ActionType" FromRole="ActionType" ToRole="Action" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="Int32" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Action" Relationship="Self.ActionDistrict" FromRole="District" ToRole="Action" />
+          <NavigationProperty Name="User" Relationship="Self.UserDistrict" FromRole="District" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPatronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Action" Relationship="Self.ActionOrganizer" FromRole="User" ToRole="Action" />
+          <NavigationProperty Name="Action1" Relationship="Self.ActionParticipant" FromRole="User" ToRole="Action" />
+          <NavigationProperty Name="District" Relationship="Self.UserDistrict" FromRole="User" ToRole="District" />
+        </EntityType>
+        <Association Name="FK_Action_ActionStatus">
+          <End Role="ActionStatus" Type="Self.ActionStatus" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionStatus">
+              <PropertyRef Name="ActionStatusID" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="ActionStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Action_ActionType">
+          <End Role="ActionType" Type="Self.ActionType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionType">
+              <PropertyRef Name="ActionTypeID" />
+            </Principal>
+            <Dependent Role="Action">
+              <PropertyRef Name="ActionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ActionDistrict">
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+        </Association>
+        <Association Name="ActionOrganizer">
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="ActionParticipant">
+          <End Role="Action" Type="Self.Action" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="UserDistrict">
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="GiveGoodEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Action" EntityType="Self.Action" />
+          <EntitySet Name="ActionStatus" EntityType="Self.ActionStatus" />
+          <EntitySet Name="ActionType" EntityType="Self.ActionType" />
+          <EntitySet Name="District" EntityType="Self.District" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Action_ActionStatus" Association="Self.FK_Action_ActionStatus">
+            <End Role="ActionStatus" EntitySet="ActionStatus" />
+            <End Role="Action" EntitySet="Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Action_ActionType" Association="Self.FK_Action_ActionType">
+            <End Role="ActionType" EntitySet="ActionType" />
+            <End Role="Action" EntitySet="Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="ActionDistrict" Association="Self.ActionDistrict">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="ActionOrganizer" Association="Self.ActionOrganizer">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="ActionParticipant" Association="Self.ActionParticipant">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="UserDistrict" Association="Self.UserDistrict">
+            <End Role="District" EntitySet="District" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище GiveGoodModelContainer" CdmEntityContainer="GiveGoodEntities">
+          <EntitySetMapping Name="Action">
+            <EntityTypeMapping TypeName="GiveGoodModel.Action">
+              <MappingFragment StoreEntitySet="Action">
+                <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ActionTypeID" ColumnName="ActionTypeID" />
+                <ScalarProperty Name="ActionDescription" ColumnName="ActionDescription" />
+                <ScalarProperty Name="ActionMaxParticipants" ColumnName="ActionMaxParticipants" />
+                <ScalarProperty Name="ActionStatusID" ColumnName="ActionStatusID" />
+                <ScalarProperty Name="ActionRegisterDate" ColumnName="ActionRegisterDate" />
+                <ScalarProperty Name="ActionStartDate" ColumnName="ActionStartDate" />
+                <ScalarProperty Name="ActionFinishDate" ColumnName="ActionFinishDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActionStatus">
+            <EntityTypeMapping TypeName="GiveGoodModel.ActionStatus">
+              <MappingFragment StoreEntitySet="ActionStatus">
+                <ScalarProperty Name="ActionStatusID" ColumnName="ActionStatusID" />
+                <ScalarProperty Name="ActionStatusName" ColumnName="ActionStatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActionType">
+            <EntityTypeMapping TypeName="GiveGoodModel.ActionType">
+              <MappingFragment StoreEntitySet="ActionType">
+                <ScalarProperty Name="ActionTypeID" ColumnName="ActionTypeID" />
+                <ScalarProperty Name="ActionTypeName" ColumnName="ActionTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="District">
+            <EntityTypeMapping TypeName="GiveGoodModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="GiveGoodModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="GiveGoodModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="GiveGoodModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPatronymic" ColumnName="UserPatronymic" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ActionDistrict" TypeName="GiveGoodModel.ActionDistrict" StoreEntitySet="ActionDistrict">
+            <EndProperty Name="Action">
+              <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+            </EndProperty>
+            <EndProperty Name="District">
+              <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ActionOrganizer" TypeName="GiveGoodModel.ActionOrganizer" StoreEntitySet="ActionOrganizer">
+            <EndProperty Name="Action">
+              <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ActionParticipant" TypeName="GiveGoodModel.ActionParticipant" StoreEntitySet="ActionParticipant">
+            <EndProperty Name="Action">
+              <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserDistrict" TypeName="GiveGoodModel.UserDistrict" StoreEntitySet="UserDistrict">
+            <EndProperty Name="District">
+              <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
